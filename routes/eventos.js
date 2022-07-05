@@ -3,7 +3,7 @@ const EventoMongoDao = require("~/dao/EventoMongoDao");
 module.exports = app => {
     const eventoDao = new EventoMongoDao()
 
-    app.route('/eventos')
+    app.route('/api/eventos')
         .all(app.auth.authenticate())
         .get(async (req, res) => {
             try {
@@ -38,7 +38,7 @@ module.exports = app => {
             }
         });
 
-    app.route('/eventos/:id')
+    app.route('/api/eventos/:id')
         .all(app.auth.authenticate())
         .delete(async (req, res) => {
             try {

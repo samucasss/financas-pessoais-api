@@ -7,7 +7,7 @@ module.exports = app => {
     const eventoDao = new EventoMongoDao()
     const realizacaoEventoDao = new RealizacaoEventoMongoDao()
 
-    app.route('/acompanhamento')
+    app.route('/api/acompanhamento')
         .all(app.auth.authenticate())
         .get(async (req, res) => {
             try {
@@ -34,8 +34,8 @@ module.exports = app => {
 
                 const inicio = moment(new Date(ano, mes, 1))
                 const fim = inicio.clone().endOf('month')
-                console.log('inicio: ' + inicio.format('DD/MM/YYYY'))
-                console.log('fim: ' + fim.format('DD/MM/YYYY'))
+                //console.log('inicio: ' + inicio.format('DD/MM/YYYY'))
+                //console.log('fim: ' + fim.format('DD/MM/YYYY'))
 
                 const usuarioId = req.user.id
 

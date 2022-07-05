@@ -21,8 +21,12 @@ class UsuarioMongoDao extends MongoDaoAbstract {
         salt: {
             type: String,
             required: true
+        },
+        token: {
+            type: String,
+            required: false
         }
-    });    
+    });
 
     constructor() {
         super()
@@ -41,8 +45,12 @@ class UsuarioMongoDao extends MongoDaoAbstract {
     }
 
     async findByEmail(email) {
-        const usuario = await this.findOne({email: email})
+        const usuario = await this.findOne({ email: email })
         return usuario
+    }
+
+    async saveToken(id, token) {
+        await this.model.updateOne({_id: id}, { $set: { token: token } })
     }
 }
 

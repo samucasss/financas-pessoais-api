@@ -12,7 +12,7 @@ describe('Routes: Eventos', () => {
     let eventoList;
     let eventoFake;
 
-    describe('GET /eventos', () => {
+    describe('GET /api/eventos', () => {
         beforeEach(async () => {
             await usuarioDao.deleteAll();
 
@@ -58,7 +58,7 @@ describe('Routes: Eventos', () => {
         });
         describe('status 200', () => {
             it('Retorna lista de eventos', done => {
-                request.get('/eventos')
+                request.get('/api/eventos')
                     .set({ Authorization: `Bearer ${token}` })
                     .expect(200)
                     .end((err, res) => {
@@ -84,14 +84,14 @@ describe('Routes: Eventos', () => {
         });
         describe('status 401', () => {
             it('Retorna erro quando usuario nao foi autenticado', done => {
-                request.get('/eventos')
+                request.get('/api/eventos')
                     .expect(401)
                     .end(done);
             });
         });
     });
 
-    describe('POST /eventos', () => {
+    describe('POST /api/eventos', () => {
         beforeEach(async () => {
             await usuarioDao.deleteAll();
 
@@ -109,7 +109,7 @@ describe('Routes: Eventos', () => {
         });
         describe('status 200', () => {
             it('Cadastra novo evento', done => {
-                request.post('/eventos')
+                request.post('/api/eventos')
                     .set({ Authorization: `Bearer ${token}` })
                     .send({
                         "data": "2022-06-10",
@@ -141,14 +141,14 @@ describe('Routes: Eventos', () => {
         });
         describe('status 401', () => {
             it('Retorna erro quando usuario nao foi autenticado', done => {
-                request.post('/eventos')
+                request.post('/api/eventos')
                     .expect(401)
                     .end(done);
             });
         });
         describe('status 412', () => {
             it('Retorna erro quando o campo data nao foi preenchido', done => {
-                request.post('/eventos')
+                request.post('/api/eventos')
                     .set({ Authorization: `Bearer ${token}` })
                     .send({
                         "data": "",
@@ -165,7 +165,7 @@ describe('Routes: Eventos', () => {
         });
         describe('status 412', () => {
             it('Retorna erro quando o campo nome nao foi preenchido', done => {
-                request.post('/eventos')
+                request.post('/api/eventos')
                     .set({ Authorization: `Bearer ${token}` })
                     .send({
                         "data": "2022-06-10",
@@ -182,7 +182,7 @@ describe('Routes: Eventos', () => {
         });
         describe('status 412', () => {
             it('Retorna erro quando o campo tipo nao foi preenchido', done => {
-                request.post('/eventos')
+                request.post('/api/eventos')
                     .set({ Authorization: `Bearer ${token}` })
                     .send({
                         "data": "2022-06-10",
@@ -199,7 +199,7 @@ describe('Routes: Eventos', () => {
         });
         describe('status 412', () => {
             it('Retorna erro quando o campo tipoRecorrencia nao foi preenchido para evento recorrente', done => {
-                request.post('/eventos')
+                request.post('/api/eventos')
                     .set({ Authorization: `Bearer ${token}` })
                     .send({
                         "data": "2022-06-10",
@@ -216,7 +216,7 @@ describe('Routes: Eventos', () => {
         });
         describe('status 412', () => {
             it('Retorna erro quando o campo valor nao foi preenchido', done => {
-                request.post('/eventos')
+                request.post('/api/eventos')
                     .set({ Authorization: `Bearer ${token}` })
                     .send({
                         "data": "2022-06-10",
@@ -234,7 +234,7 @@ describe('Routes: Eventos', () => {
 
     });
 
-    describe('DELETE /eventos/:id', () => {
+    describe('DELETE /api/eventos/:id', () => {
         beforeEach(async () => {
             await usuarioDao.deleteAll();
 
@@ -266,7 +266,7 @@ describe('Routes: Eventos', () => {
         });
         describe('status 200', () => {
             it('Retorna OK', done => {
-                request.delete(`/eventos/${eventoFake.id}`)
+                request.delete(`/api/eventos/${eventoFake.id}`)
                     .set({ Authorization: `Bearer ${token}` })
                     .expect(200)
                     .end((err, res) => {
@@ -277,7 +277,7 @@ describe('Routes: Eventos', () => {
         });
         describe('status 401', () => {
             it('Retorna erro quando usuario nao foi autenticado', done => {
-                request.delete(`/eventos/${eventoFake.id}`)
+                request.delete(`/api/eventos/${eventoFake.id}`)
                     .expect(401)
                     .end(done);
             });

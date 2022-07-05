@@ -14,7 +14,7 @@ describe('Routes: Eventos', () => {
     let eventoList;
     let eventoFake;
 
-    describe('GET /acompanhamento', () => {
+    describe('GET /api/acompanhamento', () => {
         beforeEach(async () => {
             await usuarioDao.deleteAll();
 
@@ -97,7 +97,7 @@ describe('Routes: Eventos', () => {
         });
         describe('status 200', () => {
             it('Retorna planejamento mensal de maio', done => {
-                request.get('/acompanhamento')
+                request.get('/api/acompanhamento')
                     .set({ Authorization: `Bearer ${token}` })
                     .send({
                         "mes": 4,
@@ -122,7 +122,7 @@ describe('Routes: Eventos', () => {
                     });
             });
             it('Retorna planejamento mensal de junho', done => {
-                request.get('/acompanhamento')
+                request.get('/api/acompanhamento')
                     .set({ Authorization: `Bearer ${token}` })
                     .send({
                         "mes": 5,
@@ -146,14 +146,14 @@ describe('Routes: Eventos', () => {
         });
         describe('status 401', () => {
             it('Retorna erro quando usuario nao foi autenticado', done => {
-                request.get('/acompanhamento')
+                request.get('/api/acompanhamento')
                     .expect(401)
                     .end(done);
             });
         });
         describe('status 412', () => {
             it('Retorna erro quando o mes nao foi preenchido', done => {
-                request.post('/acompanhamento')
+                request.post('/api/acompanhamento')
                     .set({ Authorization: `Bearer ${token}` })
                     .send({
                         "mes": '',
@@ -165,7 +165,7 @@ describe('Routes: Eventos', () => {
         });
         describe('status 412', () => {
             it('Retorna erro quando o ano nao foi preenchido', done => {
-                request.post('/acompanhamento')
+                request.post('/api/acompanhamento')
                     .set({ Authorization: `Bearer ${token}` })
                     .send({
                         "mes": 5,
@@ -177,7 +177,7 @@ describe('Routes: Eventos', () => {
         });
         describe('status 412', () => {
             it('Retorna erro quando o mes for invalido', done => {
-                request.post('/acompanhamento')
+                request.post('/api/acompanhamento')
                     .set({ Authorization: `Bearer ${token}` })
                     .send({
                         "mes": 12,
@@ -189,7 +189,7 @@ describe('Routes: Eventos', () => {
         });
         describe('status 412', () => {
             it('Retorna erro quando o ano for invalido', done => {
-                request.post('/acompanhamento')
+                request.post('/api/acompanhamento')
                     .set({ Authorization: `Bearer ${token}` })
                     .send({
                         "mes": 11,
@@ -201,7 +201,7 @@ describe('Routes: Eventos', () => {
         });
     });
 
-    describe('POST /acompanhamento', () => {
+    describe('POST /api/acompanhamento', () => {
         beforeEach(async () => {
             await usuarioDao.deleteAll();
 
@@ -232,7 +232,7 @@ describe('Routes: Eventos', () => {
         });
         describe('status 200', () => {
             it('Registra realização de evento', done => {
-                request.post('/acompanhamento')
+                request.post('/api/acompanhamento')
                     .set({ Authorization: `Bearer ${token}` })
                     .send({
                         "eventoId": eventoFake.id,
@@ -263,14 +263,14 @@ describe('Routes: Eventos', () => {
         });
         describe('status 401', () => {
             it('Retorna erro quando usuario nao foi autenticado', done => {
-                request.post('/eventos')
+                request.post('/api/acompanhamento')
                     .expect(401)
                     .end(done);
             });
         });
         describe('status 412', () => {
             it('Retorna erro quando o campo data nao foi preenchido', done => {
-                request.post('/eventos')
+                request.post('/api/acompanhamento')
                     .set({ Authorization: `Bearer ${token}` })
                     .send({
                         "data": "",
@@ -287,7 +287,7 @@ describe('Routes: Eventos', () => {
         });
         describe('status 412', () => {
             it('Retorna erro quando o campo nome nao foi preenchido', done => {
-                request.post('/eventos')
+                request.post('/api/acompanhamento')
                     .set({ Authorization: `Bearer ${token}` })
                     .send({
                         "data": "2022-06-10",
@@ -304,7 +304,7 @@ describe('Routes: Eventos', () => {
         });
         describe('status 412', () => {
             it('Retorna erro quando o campo tipo nao foi preenchido', done => {
-                request.post('/eventos')
+                request.post('/api/acompanhamento')
                     .set({ Authorization: `Bearer ${token}` })
                     .send({
                         "data": "2022-06-10",
@@ -321,7 +321,7 @@ describe('Routes: Eventos', () => {
         });
         describe('status 412', () => {
             it('Retorna erro quando o campo valor nao foi preenchido', done => {
-                request.post('/eventos')
+                request.post('/api/acompanhamento')
                     .set({ Authorization: `Bearer ${token}` })
                     .send({
                         "data": "2022-06-10",
