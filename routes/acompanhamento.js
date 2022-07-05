@@ -7,7 +7,7 @@ module.exports = app => {
     const eventoDao = new EventoMongoDao()
     const realizacaoEventoDao = new RealizacaoEventoMongoDao()
 
-    app.route('/api/acompanhamento')
+    app.route('/acompanhamento')
         .all(app.auth.authenticate())
         .get(async (req, res) => {
             try {

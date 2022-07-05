@@ -4,7 +4,7 @@ const Usuario = require("~/models/Usuario");
 module.exports = app => {
     const usuarioDao = new UsuarioMongoDao()
 
-    app.route('/api/usuarios')
+    app.route('/usuarios')
         .post(async (req, res) => {
             try {
                 const json = req.body
@@ -18,7 +18,7 @@ module.exports = app => {
             }
         });
 
-    app.route('/api/usuario')
+    app.route('/usuario')
         .all(app.auth.authenticate())
         .delete(async (req, res) => {
             try {

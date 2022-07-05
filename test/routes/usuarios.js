@@ -6,13 +6,13 @@ describe('Routes: Usuarios', () => {
     const usuarioDao = new UsuarioMongoDao();
     let token;
 
-    describe('POST /api/usuarios', () => {
+    describe('POST /usuarios', () => {
         beforeEach(async () => {
             await usuarioDao.deleteAll();
         });
         describe('status 200', () => {
             it('Retorna usuario cadastrado', done => {
-                request.post('/api/usuarios')
+                request.post('/usuarios')
                     .send({
                         nome: 'Samuel Santos',
                         email: 'samuca.santos@gmail.com',
@@ -31,7 +31,7 @@ describe('Routes: Usuarios', () => {
         });
         describe('status 412', () => {
             it('Retorna erro quando campo nome nao preenchido', done => {
-                request.post('/api/usuarios')
+                request.post('/usuarios')
                     .send({
                         nome: '',
                         email: 'samuca.santos@gmail.com',
@@ -41,7 +41,7 @@ describe('Routes: Usuarios', () => {
                     .end(done);
             });
             it('Retorna erro quando campo email nao preenchido', done => {
-                request.post('/api/usuarios')
+                request.post('/usuarios')
                     .send({
                         nome: 'Samuel Santos',
                         email: '',
@@ -51,7 +51,7 @@ describe('Routes: Usuarios', () => {
                     .end(done);
             });
             it('Retorna erro quando campo senha nao preenchido', done => {
-                request.post('/api/usuarios')
+                request.post('/usuarios')
                     .send({
                         nome: 'Samuel Santos',
                         email: 'samuca.santos@gmail.com',
@@ -63,7 +63,7 @@ describe('Routes: Usuarios', () => {
         });
     });
 
-    describe('DELETE /api/usuario', () => {
+    describe('DELETE /usuario', () => {
         beforeEach(async () => {
             await usuarioDao.deleteAll();
 
@@ -79,7 +79,7 @@ describe('Routes: Usuarios', () => {
         });
         describe('status 200', () => {
             it('Retorna OK', done => {
-                request.delete('/api/usuario')
+                request.delete('/usuario')
                     .set({ Authorization: `Bearer ${token}` })
                     .expect(200)
                     .end((err, res) => {
@@ -90,7 +90,7 @@ describe('Routes: Usuarios', () => {
         });
         describe('status 401', () => {
             it('Retorna erro quando usuario nao foi autenticado', done => {
-                request.delete('/api/usuario')
+                request.delete('/usuario')
                     .expect(401)
                     .end(done);
             });

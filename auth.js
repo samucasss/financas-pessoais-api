@@ -3,7 +3,7 @@ const { Strategy, ExtractJwt } = require('passport-jwt');
 const config = require('./config');
 const UsuarioMongoDao = require("./dao/UsuarioMongoDao");
 
-module.exports = (app) => {
+module.exports = () => {
     const usuarioDao = new UsuarioMongoDao()
     const { jwt } = config;
 

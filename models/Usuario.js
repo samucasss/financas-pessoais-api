@@ -9,7 +9,6 @@ class Usuario {
         this.email = ''
         this.hash = ''
         this.salt = ''
-        this.token = ''
 
         if (json) {
             ObjectUtil.copy(this, json)

@@ -1,7 +1,7 @@
 describe('Routes: Index', () => {
-    describe('GET /api', () => {
+    describe('GET ', () => {
         it('Retorna o status da API', done => {
-            request.get('/api')
+            request.get('/')
                 .expect(200)
                 .end((err, res) => {
                     

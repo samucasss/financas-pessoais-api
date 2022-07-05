@@ -8,7 +8,7 @@ describe('Routes: Auth', () => {
 
     let token;
 
-    describe('POST /api/auth/login', () => {
+    describe('POST /auth/login', () => {
         beforeEach(async () => {
             await usuarioDao.deleteAll();
 
@@ -23,7 +23,7 @@ describe('Routes: Auth', () => {
         });
         describe('status 200', () => {
             it('Retorna token do usuario autenticado', done => {
-                request.post('/api/auth/login')
+                request.post('/auth/login')
                     .send({
                         email: 'samuca.santos@gmail.com',
                         senha: 'samuca'
@@ -37,7 +37,7 @@ describe('Routes: Auth', () => {
         });
         describe('status 412', () => {
             it('Retorna erro quando senha incorreta', done => {
-                request.post('/api/auth/login')
+                request.post('/auth/login')
                     .send({
                         email: 'samuca.santos@gmail.com',
                         password: 'samuca20'
@@ -46,7 +46,7 @@ describe('Routes: Auth', () => {
                     .end(done);
             });
             it('Retorna erro quando email nao existe', done => {
-                request.post('/api/auth/login')
+                request.post('/auth/login')
                     .send({
                         email: 'samuca@gmail.com',
                         password: 'samuca20'
@@ -55,58 +55,14 @@ describe('Routes: Auth', () => {
                     .end(done);
             });
             it('Retorna erro quando campos nao preenchidos', done => {
-                request.post('/api/auth/login')
+                request.post('/auth/login')
                     .expect(412)
                     .end(done);
             });
         });
     });
 
-    describe('POST /api/auth/logout', () => {
-        beforeEach(async () => {
-            await usuarioDao.deleteAll();
-
-            const json = {
-                nome: 'Samuel Santos',
-                email: 'samuca.santos@gmail.com',
-                senha: 'samuca'
-            }
-
-            const usuario = new Usuario(json)
-
-            const result = await usuarioDao.save(usuario)
-
-            const { secret } = config.jwt;
-            const payload = { id: result.id };
-            token = jwt.encode(payload, secret);
-
-            await usuarioDao.saveToken(result.id, token)
-            
-        });
-        describe('status 200', () => {
-            it('Retorna usuario deslogado', done => {
-                request.post('/api/auth/logout')
-                    .set({ Authorization: `Bearer ${token}` })
-                    .expect(200)
-                    .end((err, res) => {
-                        console.log('res.body: ' + JSON.stringify(res.body))
-                        expect(res.body.token).to.eql('');
-                        expect(res.body.status).to.eql('OK');
-
-                        done(err);
-                    });
-            });
-        });
-        describe('status 401', () => {
-            it('Retorna erro quando usuario nao foi autenticado', done => {
-                request.post('/api/auth/logout')
-                    .expect(401)
-                    .end(done);
-            });
-        });
-    });
-
-    describe('GET /api/auth/user', () => {
+    describe('GET /auth/user', () => {
         beforeEach(async () => {
             await usuarioDao.deleteAll();
 
@@ -122,22 +78,23 @@ describe('Routes: Auth', () => {
         });
         describe('status 200', () => {
             it('Retorna usuario logado', done => {
-                request.get('/api/auth/user')
+                request.get('/auth/user')
                     .set({ Authorization: `Bearer ${token}` })
                     .expect(200)
                     .end((err, res) => {
-                        expect(res.body.nome).to.eql('Samuel Santos');
-                        expect(res.body.email).to.eql('samuca.santos@gmail.com');
-                        expect(res.body.id).not.to.be.null
-                        expect(res.body.hash).to.be.undefined
-                        expect(res.body.salt).to.be.undefined
+                        const user = res.body.user
+                        expect(user.nome).to.eql('Samuel Santos');
+                        expect(user.email).to.eql('samuca.santos@gmail.com');
+                        expect(user.id).not.to.be.null
+                        expect(user.hash).to.be.undefined
+                        expect(user.salt).to.be.undefined
                         done(err);
                     });
             });
         });
         describe('status 401', () => {
             it('Retorna erro quando usuario nao foi autenticado', done => {
-                request.get('/api/auth/user')
+                request.get('/auth/user')
                     .expect(401)
                     .end(done);
             });

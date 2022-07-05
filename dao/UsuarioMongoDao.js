@@ -21,10 +21,6 @@ class UsuarioMongoDao extends MongoDaoAbstract {
         salt: {
             type: String,
             required: true
-        },
-        token: {
-            type: String,
-            required: false
         }
     });
 
@@ -49,9 +45,6 @@ class UsuarioMongoDao extends MongoDaoAbstract {
         return usuario
     }
 
-    async saveToken(id, token) {
-        await this.model.updateOne({_id: id}, { $set: { token: token } })
-    }
 }
 
 module.exports = UsuarioMongoDao;

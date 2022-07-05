@@ -6,7 +6,11 @@
   "scripts": {
     "start": "node index.js",
     "dev": "nodemon",
-    "test": "SET NODE_ENV=test&& mocha test/**/*.js"
+    "test": "SET NODE_ENV=test&& mocha test/**/*.js",
+    "format:check": "prettier --check .",
+    "format:write": "prettier --write .",
+    "lint:check": "eslint .",
+    "lint:fix": "eslint --fix ."
   },
   "author": "Samuel Santos",
   "dependencies": {
@@ -21,9 +25,13 @@
     "passport-jwt": "^4.0.0"
   },
   "devDependencies": {
+    "@babel/eslint-parser": "^7.18.2",
     "chai": "^4.3.6",
+    "eslint": "^8.19.0",
+    "eslint-config-prettier": "^8.5.0",
     "mocha": "^10.0.0",
     "nodemon": "^2.0.16",
+    "prettier": "^2.7.1",
     "supertest": "^6.2.3"
   },
   "_moduleAliases": {
