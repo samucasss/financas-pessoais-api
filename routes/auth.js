@@ -18,10 +18,14 @@ module.exports = (app) => {
                     const token = jwt.encode(payload, secret);
 
                     return res.json({ token: token });
+                } else {
+                    res.status(412).json({ msg: 'E-mail e/ou senha incorretos' });    
                 }
+
+            } else {
+                res.status(412).json({ msg: 'Campos E-mail e senha nao informados' });
             }
 
-            res.status(412).json({ msg: 'Campos Email e senha nao informados' });
 
         } catch (err) {
             res.status(412).json({ msg: err.message });

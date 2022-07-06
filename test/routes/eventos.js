@@ -106,6 +106,21 @@ describe('Routes: Eventos', () => {
             token = jwt.encode({ id: result.id }, config.jwt.secret);
 
             await eventoDao.deleteAll();
+
+            //cria um evento para alteracao
+            const evento = {
+                "data": "2022-06-10",
+                "nome": "Salário dia 10",
+                "tipo": "R",
+                "recorrente": true,
+                "tipoRecorrencia": "M",
+                "valor": 8300.00,
+                "realizado": false,
+                "usuarioId": result.id
+            }
+
+            eventoFake = await eventoDao.save(evento)
+
         });
         describe('status 200', () => {
             it('Cadastra novo evento', done => {
@@ -138,6 +153,38 @@ describe('Routes: Eventos', () => {
                         done(err);
                     });
             });
+            it('Altera evento existente', done => {
+                request.post('/eventos')
+                    .set({ Authorization: `Bearer ${token}` })
+                    .send({
+                        "eventoId": eventoFake.id,
+                        "data": "2022-06-10",
+                        "nome": "Salário dia 10",
+                        "tipo": "R",
+                        "recorrente": true,
+                        "tipoRecorrencia": "M",
+                        "valor": 8500.00,
+                        "realizado": false
+                    })
+                    .expect(200)
+                    .end((err, res) => {
+                        const evento = res.body
+
+                        expect(evento.id).not.to.be.null
+                        expect(evento.nome).to.eql("Salário dia 10");
+                        expect(evento.tipo).to.eql("R");
+                        expect(evento.recorrente).to.eql(true);
+                        expect(evento.tipoRecorrencia).to.eql("M");
+                        expect(evento.valor).to.eql(8500);
+                        expect(evento.realizado).to.eql(false);
+
+                        const dataEvento = moment.utc(evento.data).format('YYYY-MM-DD');
+                        expect(dataEvento).to.eql("2022-06-10");
+
+                        done(err);
+                    });
+            });
+
         });
         describe('status 401', () => {
             it('Retorna erro quando usuario nao foi autenticado', done => {

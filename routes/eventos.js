@@ -28,7 +28,6 @@ module.exports = app => {
                 }
 
                 const evento = ({...json, usuarioId: req.user.id})
-                
                 const result = await eventoDao.save(evento)
 
                 res.json(result);

@@ -11,8 +11,8 @@ module.exports = app => {
         .all(app.auth.authenticate())
         .get(async (req, res) => {
             try {
-                const mes = req.body.mes
-                const ano = req.body.ano
+                const mes = req.query.mes
+                const ano = req.query.ano
 
                 if (!mes || !ano) {
                     res.status(412).json({ msg: 'parametros mes e/ou ano nao informados' });

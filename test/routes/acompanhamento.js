@@ -99,7 +99,7 @@ describe('Routes: Eventos', () => {
             it('Retorna planejamento mensal de maio', done => {
                 request.get('/acompanhamento')
                     .set({ Authorization: `Bearer ${token}` })
-                    .send({
+                    .query({
                         "mes": 4,
                         "ano": 2022,
                     })
@@ -124,7 +124,7 @@ describe('Routes: Eventos', () => {
             it('Retorna planejamento mensal de junho', done => {
                 request.get('/acompanhamento')
                     .set({ Authorization: `Bearer ${token}` })
-                    .send({
+                    .query({
                         "mes": 5,
                         "ano": 2022,
                     })
@@ -153,9 +153,9 @@ describe('Routes: Eventos', () => {
         });
         describe('status 412', () => {
             it('Retorna erro quando o mes nao foi preenchido', done => {
-                request.post('/acompanhamento')
+                request.get('/acompanhamento')
                     .set({ Authorization: `Bearer ${token}` })
-                    .send({
+                    .query({
                         "mes": '',
                         "ano": 2022,
                     })
@@ -165,9 +165,9 @@ describe('Routes: Eventos', () => {
         });
         describe('status 412', () => {
             it('Retorna erro quando o ano nao foi preenchido', done => {
-                request.post('/acompanhamento')
+                request.get('/acompanhamento')
                     .set({ Authorization: `Bearer ${token}` })
-                    .send({
+                    .query({
                         "mes": 5,
                         "ano": '',
                     })
@@ -177,9 +177,9 @@ describe('Routes: Eventos', () => {
         });
         describe('status 412', () => {
             it('Retorna erro quando o mes for invalido', done => {
-                request.post('/acompanhamento')
+                request.get('/acompanhamento')
                     .set({ Authorization: `Bearer ${token}` })
-                    .send({
+                    .query({
                         "mes": 12,
                         "ano": 2022,
                     })
@@ -189,9 +189,9 @@ describe('Routes: Eventos', () => {
         });
         describe('status 412', () => {
             it('Retorna erro quando o ano for invalido', done => {
-                request.post('/acompanhamento')
+                request.get('/acompanhamento')
                     .set({ Authorization: `Bearer ${token}` })
-                    .send({
+                    .query({
                         "mes": 11,
                         "ano": 2021,
                     })

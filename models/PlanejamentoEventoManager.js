@@ -46,8 +46,8 @@ class PlanejamentoEventoManager {
         // console.log('eventoRecorrenteMensalList: ' + JSON.stringify(eventoRecorrenteMensalList))
 
         for (const evento of eventoRecorrenteMensalList) {
-            const day = moment(evento.data).date()
-            const data = moment(new Date(ano, mes, day)).toDate()
+            const day = moment.utc(evento.data).date()
+            const data = moment.utc(new Date(ano, mes, day)).toDate()
 
             const planejamentoEvento = new PlanejamentoEvento(evento, data)
             planejamentoEventoList.push(planejamentoEvento)
@@ -59,8 +59,8 @@ class PlanejamentoEventoManager {
             obj.tipoRecorrencia === 'A' && moment(obj.data).month() === mes)
 
         for (const evento of eventoRecorrenteAnualList) {
-            const day = moment(evento.data).date()
-            const data = moment(new Date(ano, mes, day)).toDate()
+            const day = moment.utc(evento.data).date()
+            const data = moment.utc(new Date(ano, mes, day)).toDate()
 
             const planejamentoEvento = new PlanejamentoEvento(evento, data)
             planejamentoEventoList.push(planejamentoEvento)
